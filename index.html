@@ -1,24 +1,654 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rabbi Fazle Portfolio</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Portfolio of Fazle Rabbi, Business System Analyst and PMP."
+    >
+
+    <title>Fazle Rabbi | Business System Analyst</title>
+
+    <style>
+        :root {
+            --primary: #7b2cbf;
+            --primary-dark: #5a189a;
+            --text: #333333;
+            --muted: #666666;
+            --background: #ffffff;
+            --light-background: #f7f7f9;
+            --border: #dddddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--background);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            min-height: 78px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero */
+
+        .hero {
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.92),
+                    rgba(255, 255, 255, 0.92)
+                ),
+                linear-gradient(135deg, #f4e8ff, #ffffff);
+        }
+
+        .hero-content {
+            max-width: 760px;
+            padding: 80px 0;
+        }
+
+        .eyebrow {
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero h2 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 24px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .button:hover {
+            background: var(--primary-dark);
+        }
+
+        .button-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        /* Sections */
+
+        section {
+            padding: 90px 0;
+            scroll-margin-top: 78px;
+        }
+
+        section:nth-of-type(even) {
+            background: var(--light-background);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-heading h2 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .section-heading div {
+            width: 55px;
+            height: 3px;
+            background: var(--primary);
+            margin: 0 auto;
+        }
+
+        .about-text {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        /* Skills */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+            border-left: 1px solid var(--border);
+        }
+
+        .skill-card {
+            min-height: 150px;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: white;
+            transition: 0.2s ease;
+        }
+
+        .skill-card:hover {
+            color: white;
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Experience */
+
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .experience-item {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+
+        .experience-item h3 {
+            font-size: 1.2rem;
+        }
+
+        .company {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .date {
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .experience-item p {
+            color: var(--muted);
+        }
+
+        /* Projects */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .project-card {
+            padding: 32px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .project-result {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Contact */
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact p {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-links a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Footer */
+
+        footer {
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+            background: #eeeeee;
+        }
+
+        /* Mobile layout */
+
+        @media (max-width: 800px) {
+            nav {
+                flex-direction: column;
+                justify-content: center;
+                padding: 18px 0;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Rabbi Fazle</h1>
-    <h2>System Analyst</h2>
 
-    <p>
-        Welcome to my portfolio website.
-    </p>
+<header>
+    <nav class="container">
+        <a class="logo" href="#home">FAZLE RABBI</a>
 
-    <h3>Skills</h3>
+        <ul class="nav-links">
+            <li><a href="#about">Profile</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <ul>
-        <li>System Analysis</li>
-        <li>API Testing</li>
-        <li>Postman</li>
-        <li>JIRA</li>
-        <li>Telecom Solutions</li>
-    </ul>
+<main>
+
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <p class="eyebrow">Business Analysis · Technology · Automation</p>
+
+            <h1>
+                Hi, I’m <span>Fazle Rabbi</span>
+            </h1>
+
+            <h2>Business System Analyst and PMP</h2>
+
+            <p>
+                I translate business needs into practical technology
+                solutions, improve workflows, support system delivery,
+                and automate complex processes.
+            </p>
+
+            <a class="button" href="#projects">View Projects</a>
+
+            <a
+                class="button button-secondary"
+                href="https://www.linkedin.com/in/fazle-rabbi-ba-ca"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Profile</h2>
+                <div></div>
+            </div>
+
+            <p class="about-text">
+                I am a PMP-certified Business System Analyst with experience
+                in telecom systems, offer configuration, API integrations,
+                Salesforce, requirements analysis, release management, and
+                AI-assisted automation. I work closely with business and
+                technical teams to clarify needs, solve delivery problems,
+                and improve system performance.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Skills</h2>
+                <div></div>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">Business Analysis</div>
+                <div class="skill-card">Requirements Elicitation</div>
+                <div class="skill-card">Salesforce</div>
+                <div class="skill-card">SQL and Snowflake</div>
+                <div class="skill-card">API Testing</div>
+                <div class="skill-card">Postman</div>
+                <div class="skill-card">Jira and Confluence</div>
+                <div class="skill-card">ServiceNow</div>
+                <div class="skill-card">Power BI and Tableau</div>
+                <div class="skill-card">Generative AI</div>
+                <div class="skill-card">Process Automation</div>
+                <div class="skill-card">Agile and Hybrid Delivery</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Experience</h2>
+                <div></div>
+            </div>
+
+            <div class="timeline">
+
+                <article class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <h3>Business System Analyst</h3>
+                            <p class="company">Amdocs Canada</p>
+                        </div>
+
+                        <p class="date">June 2024 – Present</p>
+                    </div>
+
+                    <p>
+                        Lead business analysis and system-delivery activities
+                        for telecom pricing, packaging, offer configuration,
+                        Salesforce, APIs, testing, change control, and
+                        production releases.
+                    </p>
+                </article>
+
+                <article class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <h3>Business Analyst</h3>
+                            <p class="company">
+                                Rogers Communications / Shaw Communications
+                            </p>
+                        </div>
+
+                        <p class="date">August 2020 – May 2024</p>
+                    </div>
+
+                    <p>
+                        Supported product catalogue, pricing, integrated
+                        telecom systems, vendor delivery, API validation,
+                        Salesforce troubleshooting, testing, and release
+                        readiness.
+                    </p>
+                </article>
+
+                <article class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <h3>Sales Specialist</h3>
+                            <p class="company">Shaw Communications</p>
+                        </div>
+
+                        <p class="date">Add dates</p>
+                    </div>
+
+                    <p>
+                        Consistently met or exceeded sales targets, used
+                        Salesforce and the order-entry system to manage sales,
+                        served as a Salesforce end-user interface subject
+                        matter expert, and created dashboards for senior
+                        management reporting.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Portfolio</h2>
+                <div></div>
+            </div>
+
+            <div class="projects-grid">
+
+                <article class="project-card">
+                    <h3>AI-Assisted Configuration Automation</h3>
+
+                    <p>
+                        Automated complex pricing and packaging workflows
+                        using Cursor Agentic AI, MCPs, data extracts, and more
+                        than 500 configuration files.
+                    </p>
+
+                    <p class="project-result">
+                        Result: 50% less manual effort and 100% production-ready
+                        data accuracy.
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <h3>Automated Offer Mapping</h3>
+
+                    <p>
+                        Helped deliver an automated UI and API configuration
+                        pipeline integrated with CI/CD, Postman, Salesforce,
+                        Jira, and Jenkins.
+                    </p>
+
+                    <p class="project-result">
+                        Result: Release time reduced from approximately
+                        10 days to 2 days.
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <h3>Offshore BA Team Development</h3>
+
+                    <p>
+                        Built and trained a three-member offshore Business
+                        Analysis team to support recurring production releases.
+                    </p>
+
+                    <p class="project-result">
+                        Result: Contributed to a 50% OPEX reduction.
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <h3>Salesforce Reporting</h3>
+
+                    <p>
+                        Served as a Salesforce end-user interface subject
+                        matter expert and created dashboards for senior
+                        management reporting.
+                    </p>
+
+                    <p class="project-result">
+                        Focus: Sales visibility and management reporting.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container contact">
+            <div class="section-heading">
+                <h2>Contact</h2>
+                <div></div>
+            </div>
+
+            <p>
+                Contact me regarding business analysis, system delivery,
+                automation, or project opportunities.
+            </p>
+
+            <div class="contact-links">
+                <a href="mailto:frkhan4@gmail.com">
+                    Email
+                </a>
+
+                <a
+                    href="https://www.linkedin.com/in/fazle-rabbi-ba-ca"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    LinkedIn
+                </a>
+
+                <a
+                    href="https://github.com/frkhanbd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Fazle Rabbi. All rights reserved.</p>
+</footer>
+
 </body>
 </html>
