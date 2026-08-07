@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Postman-Based Business Analysis | API Troubleshooting Portfolio</title>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #ff6c37;
+      --blue: #0284c7;
+      --teal: #0f766e;
+      --green: #16a34a;
+      --red: #dc2626;
+      --light: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Header */
+    header {
+      background: rgba(15, 23, 42, 0.96);
+      color: white;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      background: var(--accent);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0f766e 100%);
+      color: white;
+      padding: 90px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: #bae6fd;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #e2e8f0;
+      margin-bottom: 28px;
+      max-width: 720px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #e85d2d;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: white;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
+    }
+
+    .mock-window {
+      background: #111827;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+
+    .mock-bar {
+      background: #1f2937;
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .red { background: #ef4444; }
+    .yellow { background: #f59e0b; }
+    .green { background: #22c55e; }
+
+    .mock-content {
+      padding: 20px;
+      font-family: Consolas, monospace;
+      font-size: 0.86rem;
+      color: #d1d5db;
+      min-height: 315px;
+    }
+
+    .method {
+      background: var(--accent);
+      color: white;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .endpoint {
+      color: #93c5fd;
+      word-break: break-word;
+    }
+
+    .json {
+      margin-top: 18px;
+      color: #a7f3d0;
+      white-space: pre-wrap;
+    }
+
+    .json .key {
+      color: #93c5fd;
+    }
+
+    .json .value {
+      color: #fca5a5;
+    }
+
+    /* Sections */
+    section {
+      padding: 72px 0;
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      transition: 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #fff1eb;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Case Study */
+    .case-study {
+      background: #eaf6ff;
+    }
+
+    .case-box {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .case-text,
+    .case-visual {
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+    }
+
+    .tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .case-text h3 {
+      font-size: 1.65rem;
+      margin-bottom: 14px;
+    }
+
+    .case-text p {
+      color: var(--secondary);
+      margin-bottom: 14px;
+    }
+
+    .impact-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .impact-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 13px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .flow-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .flow-step h4 {
+      font-size: 0.98rem;
+      margin-bottom: 2px;
+    }
+
+    .flow-step p {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .warning-step .flow-number {
+      background: var(--red);
+    }
+
+    .postman-step .flow-number {
+      background: var(--accent);
+    }
+
+    .success-step .flow-number {
+      background: var(--green);
+    }
+
+    /* Visual Diagram */
+    .diagram-wrap {
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+    }
+
+    .diagram {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .diagram-node {
+      min-height: 138px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      text-align: center;
+    }
+
+    .diagram-node::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 45%;
+      color: var(--muted);
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .diagram-node:last-child::after {
+      content: "";
+    }
+
+    .diagram-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .diagram-node h4 {
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+    }
+
+    .diagram-node p {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .node-postman {
+      border-color: #ffb199;
+      background: #fff7ed;
+    }
+
+    .node-rca {
+      border-color: #fecaca;
+      background: #fff1f2;
+    }
+
+    .node-success {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    /* JSON Analysis */
+    .json-section {
+      background: #0f172a;
+      color: white;
+    }
+
+    .json-section .section-header h2,
+    .json-section .section-header p {
+      color: white;
+    }
+
+    .json-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .code-card {
+      background: #111827;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 24px;
+      overflow: auto;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #d1d5db;
+      font-family: Consolas, monospace;
+      font-size: 0.88rem;
+    }
+
+    .analysis-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .analysis-item {
+      padding: 15px;
+      border-radius: 14px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      margin-bottom: 12px;
+    }
+
+    .analysis-item strong {
+      color: #93c5fd;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      background: #e0f2fe;
+      color: #075985;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+      align-items: start;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .timeline-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff7ed;
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    .timeline-item h3 {
+      margin-bottom: 6px;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+    }
+
+    /* Impact */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .impact-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .impact-card span {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .impact-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .impact-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    footer p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .case-box,
+      .json-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .diagram {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-node::after {
+        content: "↓";
+        right: 50%;
+        top: auto;
+        bottom: -22px;
+        transform: translateX(50%);
+      }
+
+      .diagram-node:last-child::after {
+        content: "";
+      }
+
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 50px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span class="logo-badge">Postman</span>
+        API Troubleshooting Portfolio
+      </div>
+
+      <nav class="nav-links">
+        #what-i-doWhat I Do</a>
+        #case-studyCase Study</a>
+        #workflowWorkflow</a>
+        #json-analysisJSON Analysis</a>
+        #impactBusiness Impact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">System Analysis • REST APIs • Postman • RCA</div>
+        <h1>Postman-Driven Business Analysis & Offer Troubleshooting</h1>
+        <p>
+          I use Postman in my day-to-day work to investigate production issues, analyze API responses,
+          reproduce customer scenarios, validate pricing logic, and support accurate offer delivery across
+          telecom sales and customer-facing channels.
+        </p>
+
+        <div class="hero-buttons">
+          #case-studyView Real Case Study</a>
+          #workflowSee Workflow</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="mock-window">
+          <div class="mock-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+
+          <div class="mock-content">
+            <p>
+              <span class="method">POST</span>
+              <span class="endpoint">/catalogManagement/aggregationOffering</span>
+            </p>
+
+            <div class="json">
+{
+  <span class="key">"businessScenario"</span>: <span class="value">"Internet + TV Bundle"</span>,
+  <span class="key">"issue"</span>: <span class="value">"Incorrect Price Point"</span>,
+  <span class="key">"analysisTool"</span>: <span class="value">"Postman"</span>,
+  <span class="key">"validation"</span>: {
+    <span class="key">"internetPrice"</span>: <span class="value">"Correct"</span>,
+    <span class="key">"tvPrice"</span>: <span class="value">"Incorrect"</span>,
+    <span class="key">"rootCause"</span>: <span class="value">"TV Hardware Mapping"</span>
+  }
+}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Do -->
+  <section id="what-i-do">
+    <div class="container">
+      <div class="section-header">
+        <h2>How I Use Postman in My Day-to-Day Work</h2>
+        <p>
+          Postman is not only an API testing tool in my workflow. I use it as an investigation,
+          troubleshooting, validation, and root cause analysis tool for real business problems.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🔌</div>
+          <h3>API Investigation</h3>
+          <p>
+            I call production and lower-environment APIs to investigate offer, pricing, eligibility,
+            catalog, and integration issues.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📄</div>
+          <h3>JSON Response Analysis</h3>
+          <p>
+            I review complex JSON responses to validate offers, prices, discounts, product details,
+            contract types, and hardware components.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🧩</div>
+          <h3>Root Cause Analysis</h3>
+          <p>
+            I compare expected versus actual API behavior to identify pricing defects, catalog gaps,
+            mapping issues, and configuration problems.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon">✅</div>
+          <h3>Fix Validation</h3>
+          <p>
+            I rerun the same Postman requests after configuration changes to confirm the issue is resolved
+            before production release.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study -->
+  <section class="case-study" id="case-study">
+    <div class="container">
+      <div class="section-header">
+        <h2>Real Business Problem Case Study</h2>
+        <p>
+          This example shows how I used Postman to troubleshoot a pricing issue after a major pricing
+          and tax structure release.
+        </p>
+      </div>
+
+      <div class="case-box">
+        <div class="case-text">
+          <span class="tag">Production Support Scenario</span>
+          <h3>Incorrect Price Point After Go-Live</h3>
+
+          <p>
+            A project with a new pricing and tax structure went live across the website, Salesforce
+            Contact Centre application, and personalized customer email pricing system.
+          </p>
+
+          <p>
+            After go-live, a War Room was created and channel managers reported production issues in
+            a shared tracking spreadsheet. One reported issue involved an incorrect price point for an
+            Internet + TV product combination.
+          </p>
+
+          <p>
+            I used Postman to review the production API response, reproduce the same scenario in a lower
+            environment, call the detailed pricing breakdown API, and identify the root cause in product
+            catalog configuration.
+          </p>
+
+          <div class="impact-list">
+            <div class="impact-item">Impacted Channel: Website</div>
+            <div class="impact-item">Impacted Channel: Salesforce Contact Centre</div>
+            <div class="impact-item">Impacted Channel: Personalized Customer Email Pricing</div>
+            <div class="impact-item">Issue Type: Incorrect Internet + TV Bundle Price</div>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="flow">
+            <div class="flow-step warning-step">
+              <div class="flow-number">1</div>
+              <div>
+                <h4>Production Issue Reported</h4>
+                <p>Channel manager reports incorrect price after go-live.</p>
+              </div>
+            </div>
+
+            <div class="flow-step postman-step">
+              <div class="flow-number">2</div>
+              <div>
+                <h4>Production API Reviewed in Postman</h4>
+                <p>Final offer price is visible, but full pricing breakdown is not available.</p>
+              </div>
+            </div>
+
+            <div class="flow-step postman-step">
+              <div class="flow-number">3</div>
+              <div>
+                <h4>Scenario Reproduced in Lower Environment</h4>
+                <p>Prepared JSON requests are used to recreate the customer and product combination.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-number">4</div>
+              <div>
+                <h4>Pricing Breakdown API Called</h4>
+                <p>Detailed component-level pricing is analyzed.</p>
+              </div>
+            </div>
+
+            <div class="flow-step warning-step">
+              <div class="flow-number">5</div>
+              <div>
+                <h4>Root Cause Identified</h4>
+                <p>TV hardware mapping is incompatible with the bundle configuration.</p>
+              </div>
+            </div>
+
+            <div class="flow-step success-step">
+              <div class="flow-number">6</div>
+              <div>
+                <h4>Fix Validated Through Postman</h4>
+                <p>Corrected configuration is retested before production release.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow Diagram -->
+  <section id="workflow">
+    <div class="container">
+      <div class="section-header">
+        <h2>Postman Troubleshooting Workflow</h2>
+        <p>
+          The visual below explains the end-to-end flow from business issue discovery to API validation
+          and production release planning.
+        </p>
+      </div>
+
+      <div class="diagram-wrap">
+        <div class="diagram">
+          <div class="diagram-node">
+            <div class="diagram-icon">🚨</div>
+            <h4>Issue Reported</h4>
+            <p>Incorrect bundle price reported after pricing and tax release.</p>
+          </div>
+
+          <div class="diagram-node node-postman">
+            <div class="diagram-icon">🟠</div>
+            <h4>Postman Production Check</h4>
+            <p>Review production API response and final offer output.</p>
+          </div>
+
+          <div class="diagram-node node-postman">
+            <div class="diagram-icon">📄</div>
+            <h4>JSON Analysis</h4>
+            <p>Analyze offer name, product
