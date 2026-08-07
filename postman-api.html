@@ -625,6 +625,15 @@
       font-size: 0.95rem;
     }
 
+    footer a {
+      color: white;
+      font-weight: 700;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
     /* Responsive */
     @media (max-width: 960px) {
       .hero-grid,
@@ -693,12 +702,13 @@
         API Troubleshooting Portfolio
       </div>
 
-      <nav class="nav-links">
-        #what-i-doWhat I Do</a>
-        #case-studyCase Study</a>
-        #workflowWorkflow</a>
-        #json-analysisJSON Analysis</a>
-        #impactBusiness Impact</a>
+      <nav class="nav-links" aria-label="Case study navigation">
+        <a href="index.html#projects">← Portfolio Home</a>
+        <a href="#what-i-do">What I Do</a>
+        <a href="#case-study">Case Study</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#json-analysis">JSON Analysis</a>
+        <a href="#impact">Business Impact</a>
       </nav>
     </div>
   </header>
@@ -716,8 +726,8 @@
         </p>
 
         <div class="hero-buttons">
-          #case-studyView Real Case Study</a>
-          #workflowSee Workflow</a>
+          <a class="btn btn-primary" href="#case-study">View Real Case Study</a>
+          <a class="btn btn-outline" href="#workflow">See Workflow</a>
         </div>
       </div>
 
@@ -928,4 +938,157 @@
           <div class="diagram-node node-postman">
             <div class="diagram-icon">📄</div>
             <h4>JSON Analysis</h4>
-            <p>Analyze offer name, product
+            <p>Analyze offer name, product components, discounts, and final price.</p>
+          </div>
+
+          <div class="diagram-node node-rca">
+            <div class="diagram-icon">🧩</div>
+            <h4>Root Cause Identified</h4>
+            <p>Trace the incorrect price to an incompatible hardware mapping.</p>
+          </div>
+
+          <div class="diagram-node node-success">
+            <div class="diagram-icon">✅</div>
+            <h4>Fix Validated</h4>
+            <p>Repeat the request after correction and confirm the expected result.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Masked JSON Example -->
+  <section class="json-section" id="json-analysis">
+    <div class="container">
+      <div class="section-header">
+        <h2>Masked JSON Response Analysis</h2>
+        <p>
+          This simplified example preserves the analysis method while hiding
+          confidential customer, system, and commercial information.
+        </p>
+      </div>
+
+      <div class="json-grid">
+        <div class="code-card">
+<pre>{
+  "customerId": "[MASKED]",
+  "bundle": "Internet + TV",
+  "pricing": {
+    "internet": "expected",
+    "tvHardware": "unexpected",
+    "finalPrice": "[MASKED]"
+  },
+  "diagnosis": "hardware mapping mismatch"
+}</pre>
+        </div>
+
+        <div class="analysis-card">
+          <div class="analysis-item">
+            <strong>Expected behavior</strong><br>
+            Eligible bundle components return the approved combined price.
+          </div>
+
+          <div class="analysis-item">
+            <strong>Observed behavior</strong><br>
+            The TV hardware component produces an incorrect price contribution.
+          </div>
+
+          <div class="analysis-item">
+            <strong>Validation</strong><br>
+            The corrected mapping returns the expected component and final price.
+          </div>
+
+          <div class="badge-row">
+            <span class="badge">REST API</span>
+            <span class="badge">Postman</span>
+            <span class="badge">JSON</span>
+            <span class="badge">RCA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Troubleshooting Method -->
+  <section id="method">
+    <div class="container">
+      <div class="section-header">
+        <h2>End-to-End Troubleshooting Method</h2>
+        <p>
+          Each investigation connects the reported business outcome to a
+          reproducible API scenario and a verified technical correction.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon">1</div>
+          <div>
+            <h3>Clarify the reported business issue</h3>
+            <p>Confirm the affected channel, offer combination, expected result, and observed result.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon">2</div>
+          <div>
+            <h3>Reproduce and isolate the behavior</h3>
+            <p>Use controlled Postman requests to compare environments and narrow the issue to a specific component.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon">3</div>
+          <div>
+            <h3>Translate findings for delivery teams</h3>
+            <p>Document the evidence, root cause, required correction, and validation criteria.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Impact -->
+  <section id="impact">
+    <div class="container">
+      <div class="section-header">
+        <h2>Business Impact</h2>
+        <p>
+          The investigation supports accurate pricing, faster issue isolation,
+          and evidence-based release decisions.
+        </p>
+      </div>
+
+      <div class="impact-grid">
+        <div class="impact-card">
+          <span>🎯</span>
+          <h3>Clear Root Cause</h3>
+          <p>Converted a customer-facing pricing problem into a specific configuration correction.</p>
+        </div>
+
+        <div class="impact-card">
+          <span>⏱️</span>
+          <h3>Faster Resolution</h3>
+          <p>Used reproducible API evidence to reduce guesswork across business and technical teams.</p>
+        </div>
+
+        <div class="impact-card">
+          <span>🛡️</span>
+          <h3>Safer Release</h3>
+          <p>Retested the corrected scenario before production deployment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>
+        <a href="index.html#projects">← Return to Fazle Rabbi's Portfolio</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
